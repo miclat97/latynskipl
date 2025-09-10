@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Michał Łatyński</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Michał Łatyński</h1>
+      <p id="header-bottom">Developer • Creator • Technology Enthusiast</p>
+      <nav>
+        <a href="#about" id="header-about">About</a>
+        <a href="#projects" id="header-projects">Projects</a>
+        <a href="#contact" id="header-contact">Contact</a>
+        <!--<a href="index.html" class="lang-switch">PL</a> -->
+      </nav>
+    </div>
+  </header>
+
+
+<section id="about" class="container" class="about-section">
+  <div class="about-wrapper">
+    <div class="about-left">
+      <img src="profile.jpg" alt="Michał Latyński" class="profile-pic">
+      <div id="lang-toggle" class="lang-toggle" onclick="toggleLanguage()">Przełącz na Polski</div>
+    </div>
+    <div class="about-right">
+      <div class="about-text-content" id="about-box">
+	    <h2>About me</h2>
+		<p>I'm a technology enthusiast, .NET developer and Windows passionate, with a love for turning ideas into practical solutions. PowerShell, Process Explorer, ProcMon, Hyper‑V, or MMC snap‑ins - all these tools are familiar to me. I'm also exploring the Linux world, especially Debian‑based distributions. My fascination is also computer hardware and I'm always curious about the latest tech trends. Cybersecurity is my biggest focus in recent years. I enjoy experimenting in my homelab, where I can learn, test and have fun all the time :)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <section id="projects" class="container">
+    <h2 id="header-github">Last updates on my GitHub</h2>
+    <div id="project-list" class="projects-grid">
+      <p>Loading projects from GitHub...</p>
+    </div>
+  </section>
+
+  <section id="contact" class="container">
+    <h2 id="section-contact-header">Contact</h2>
+    <p>📧 <a href="mailto:michal@latynski.pl">michal@latynski.pl</a></p>
+    <p>💼 <a href="https://github.com/miclat97" target="_blank">GitHub</a></p>
+    <p>🌐 <a href="https://latynski.pl" target="_blank">latynski.pl</a></p>
+  </section>
+
+  <footer>
+    <p>© 2025 Michał Łatyński</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
