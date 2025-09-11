@@ -39,6 +39,10 @@ h2 {
   padding-bottom: 0.5rem;
 }
 
+.justified {
+  text-align: justify;
+}
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -97,12 +101,6 @@ footer {
   flex-wrap: wrap;
 }
 
-.about-left {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 0 0 180px;
-}
 
 .profile-pic {
   width: 180px;
@@ -114,8 +112,10 @@ footer {
 
 .lang-toggle {
   margin-top: 1rem;
+  margin-left: 40%;
+  margin-right: 40%;
   padding: 0.6rem 1.2rem;
-  background: linear-gradient(135deg, #0077b6, #00b4d8);
+  background: linear-gradient(135deg, #E8D400, #E89E00);
   color: white;
   font-weight: 600;
   border-radius: 6px;
@@ -150,6 +150,7 @@ footer {
     width: 100%;
   }
 }
+
 @media (max-width: 768px) {
   .about-content {
     flex-direction: column;

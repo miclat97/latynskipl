@@ -80,14 +80,14 @@ function renderProjects(lang) {
 			  desc = translateDescription(desc);
 			  card.innerHTML = `
 				  <h3>${repo.name}</h3>
-				  <p>${desc}</p>
+				  <p class="justified">${desc}</p>
 				  <a href="${repo.html_url}" target="_blank">Zobacz na GitHubie</a>
 				  `;
 			  container.appendChild(card);
 		}else{
 			  card.innerHTML = `
 				  <h3>${repo.name}</h3>
-				  <p>${desc}</p>
+				  <p class="justified">${desc}</p>
 				  <a href="${repo.html_url}" target="_blank">View on GitHub</a>
 				  `;
 			  container.appendChild(card);		
@@ -99,7 +99,7 @@ function renderProjects(lang) {
 
 const aboutTextPL = `
 		<h2>O mnie</h2>
-		<p>Jestem entuzjastą technologii, programistą (głównie w technologiach .NET, język C#), fanem systemów operacyjnych z rodziny Windows jak i innych technologii Microsoftu, takich jak Hyper-V czy chmury Azure. Ale nie samym Windowsem zyją komputery (i serwery, a może powinienem napisać "głównie serwery"? ;)<br />
+		<p class="justified">Jestem entuzjastą technologii, programistą (głównie w technologiach .NET, język C#), fanem systemów operacyjnych z rodziny Windows jak i innych technologii Microsoftu, takich jak Hyper-V czy chmury Azure. Ale nie samym Windowsem zyją komputery (i serwery, a może powinienem napisać "głównie serwery"? ;)<br />
 		Jeśli chodzi o systemy oparte na jądrze GNU/Linux, to najwięcej pozytywnych doświadczeń mam z dystrybucjami Debianopochodnymi, a dokładniej mówiąc chodzi mi o Debiana i Ubuntu.
 		Niemniej ciekawą stroną komputerów jest dla mnie ich warstwa sprzętowa - zarówno rzeczy teoretyczne jak architektury procesorów ale jeszcze bardziej praktyczne - czyli mówiąc prostszymi słowami lubię eksperymentować ze sprzętem komputerowym i inną elektroniką, a do tego zawsze staram się być na bieżąco z nowościami sprzętowymi.<br />
 		Ostatnim obszarem o którym chciałbym wspomnieć w tym krótkim opisie to cyberbezpieczeństwo - kwestiami cybersecurity zacząłem interesować się dopiero około 2 lat temu, jednak moja wiedza w tych kwestiach stopniowo rośnie :)</p>
@@ -107,11 +107,11 @@ const aboutTextPL = `
 
 const aboutTextEN = `
 		<h2>About me</h2>
-		<p>I'm a technology enthusiast, .NET developer and Windows passionate, with a love for turning ideas into practical solutions. PowerShell, Process Explorer, ProcMon, Hyper‑V, or MMC snap‑ins - all these tools are familiar to me. I'm also exploring the GNU/Linux world, especially Debian‑based distributions. My fascination is also computer hardware and I'm always curious about the latest tech trends. Cybersecurity is my biggest focus in recent years. I enjoy experimenting in my homelab, where I can learn, test and have fun all the time :)</p>
+		<p class="justified">I'm a technology enthusiast, .NET developer and Windows passionate, with a love for turning ideas into practical solutions. PowerShell, Process Explorer, ProcMon, Hyper‑V, or MMC snap‑ins - all these tools are familiar to me. I'm also exploring the GNU/Linux world, especially Debian‑based distributions. My fascination is also computer hardware and I'm always curious about the latest tech trends. Cybersecurity is my biggest focus in recent years. I enjoy experimenting in my homelab, where I can learn, test and have fun all the time :)</p>
 `;
 
-const headerBottomEN = `Developer • Creator • Technology Enthusiast`;
-const headerBottomPL = `Programista • Twórca • Komputerowy maniak`;
+const headerBottomEN = '';
+const headerBottomPL = '';
 const headerAboutEN = `About`;
 const headerAboutPL = `O mnie`;
 const headerProjectsEN = `Projects`;
@@ -120,6 +120,8 @@ const headerContactEN = `Contact`;
 const headerContactPL = `Kontakt`;
 const headerGithubEN = `Last updates on my GitHub`;
 const headerGithubPL = `Najnowsze na moim GitHub'ie`;
+const translateButtonPL = 'EN';
+const translateButtonEN = 'PL';
 
 let isPolish = true;
 
@@ -141,7 +143,7 @@ function toggleLanguage() {
 	headerContact.innerHTML = headerContactEN;
 	headerGithub.innerHTML = headerGithubEN;
 	sectionContactHeader.innerHTML = headerContactEN;
-    button.textContent = "Przełącz na Polski";
+    button.textContent = translateButtonEN;
 	renderProjects("EN");
     isPolish = false;
   } else {
@@ -152,8 +154,8 @@ function toggleLanguage() {
 	headerContact.innerHTML = headerContactPL;
 	headerGithub.innerHTML = headerGithubPL;
 	sectionContactHeader.innerHTML = headerContactPL;
+	button.textContent = translateButtonPL;
 	renderProjects("PL");
-    button.textContent = "Switch to English";
     isPolish = true;
   }
 }
