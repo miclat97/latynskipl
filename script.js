@@ -30,7 +30,13 @@ const dictENtoPL = {
     "Pobieracz plików m3u8 w [.NET].",
 
   "unofficial signal private messenger for windows":
-    "Nieoficjalny klient Signal Private Messenger dla Windows."
+    "Nieoficjalny klient Signal Private Messenger dla Windows.",
+
+  "my simple website and a pwa app as well. written from scratch in vanilla javascript, html and css":
+    "Moja prosta strona wizytówka a zarazem aplikacja PWA. Napisana w czystym javascript, html i css",
+
+  "backend in .net for the application on idea kielce 2019 hackathon. the application is used to search for stores open on non-commercial sundays.":
+    "Backend w .NET do aplikacji na hackathon IDEA KIELCE 2019. Aplikacja pozwala na wyszukiwanie otwartych sklepów w niedziele niehandlowe w Polsce"
 };
 
 function translateDescription(text) {
