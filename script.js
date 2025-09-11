@@ -63,10 +63,10 @@ function renderProjects(lang) {
 		  
 	if(cachedRepos.length == 0){
 		if(lang === "PL"){
-			container.innerHTML = "<p><a href=\"https://github.com/miclat97\">💼 Przejdź bezpośrednio na mojego GitHuba</a></p>";	
+			container.innerHTML = "<a href=\"https://github.com/miclat97\" class=\"button-blue-gradient\">Mój GitHub</a>";
 		}
 		else{
-			container.innerHTML = "<p><a href=\"https://github.com/miclat97\">💼 Go to my GitHub directly</a></p>";	
+			container.innerHTML = "<a href=\"https://github.com/miclat97\" class=\"button-blue-gradient\">Go to my GitHub</a>";
 		}
 	}else{
 		container.innerHTML = "";
@@ -107,7 +107,7 @@ const aboutTextPL = `
 
 const aboutTextEN = `
 		<h2>About me</h2>
-		<p class="justified">I'm a technology enthusiast, .NET developer and Windows passionate, with a love for turning ideas into practical solutions. PowerShell, Process Explorer, ProcMon, Hyper‑V, or MMC snap‑ins - all these tools are familiar to me. I'm also exploring the GNU/Linux world, especially Debian‑based distributions. My fascination is also computer hardware and I'm always curious about the latest tech trends. Cybersecurity is my biggest focus in recent years. I enjoy experimenting in my homelab, where I can learn, test and have fun all the time :)</p>
+		<p class="justified">I'm a technology enthusiast, .NET developer and Windows passionate, with a love for turning ideas into practical solutions. PowerShell, Process Explorer, ProcMon, Hyper‑V, or MMC snap‑ins - all these tools are familiar to me. I'm also exploring the GNU/Linux world, especially Debian‑based distributions. My fascination is also computer hardware and I'm always curious about the latest tech trends. Cybersecurity is my biggest focus in recent years. I enjoy learning new things by experimenting, by breaking and fixing almost everythingg in my little home-computer-world :)<p>
 `;
 
 const headerBottomEN = '';
@@ -164,3 +164,12 @@ function toggleLanguage() {
 window.onload = function() {
   toggleLanguage();
 };
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then(reg => console.log("ServiceWorker registred:", reg.scope))
+      .catch(err => console.error("RegisterWorker registration failed, error:", err));
+  });
+}

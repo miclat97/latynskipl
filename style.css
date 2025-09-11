@@ -110,22 +110,23 @@ footer {
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-.lang-toggle {
+.button-blue-gradient {
   margin-top: 1rem;
   margin-left: 40%;
   margin-right: 40%;
   padding: 0.6rem 1.2rem;
-  background: linear-gradient(135deg, #E8D400, #E89E00);
+  background: linear-gradient(135deg, #0077b6, #00b4d8);
   color: white;
   font-weight: 600;
   border-radius: 6px;
   cursor: pointer;
   text-align: center;
+  text-decoration: none;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   box-shadow: 0 3px 6px rgba(0,0,0,0.15);
 }
 
-.lang-toggle:hover {
+.button-blue-gradient:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 12px rgba(0,0,0,0.2);
 }
