@@ -8,8 +8,8 @@ const dictENtoPL = {
   "api in .net 8 for \"to do\" app using cqrs, mediatr, unitofwork, baserepository patterns with tests in xunit - with docker support":
     "API w .NET 8 dla aplikacji typu „To do” z wykorzystaniem wzorców CQRS, MediatR, UnitOfWork, BaseRepository oraz testów w xUnit - z obsługą Dockera.",
 
-  "windows desktop in wpf (.net 8) application to view images and any other filetype - view it content (as ascii characters)":
-    "Aplikacja desktopowa Windows w WPF (.NET 8) do przeglądania obrazów i innych typów plików - wyświetlanie ich zawartości (jako znaki ASCII).",
+  "windows desktop application in (.net 8, wpf) to quickly open any filetype - with built-in file explorer as well. app can open and play videos, music, open, zoom or scale images as well. program can also open any text document or any other file and read it as text (ascii characters)":
+    "Aplikacja desktopowa (w .NET 8, WPF) do szybkiego przeglądania wszystkich typów plików (z wbudowanym eksploratorem plików). Potrafi odtwarzać filmy, muzykę, otwierać, powiększać oraz skalować zdjęcia. Program jest w stanie też odczytać dowolny tekst z każdego innego typu pliku (w formie zwykłych znaków ASCII)",
 
   "simple calculator plugin to enova 365 erp with unit tests in .net framework 4.6.1":
     "Prosta wtyczka kalkulatora do Enova 365 ERP z testami jednostkowymi w .NET Framework 4.6.1.",
@@ -36,7 +36,10 @@ const dictENtoPL = {
     "Moja prosta strona wizytówka a zarazem aplikacja PWA. Napisana w czystym javascript, html i css",
 
   "backend in .net for the application on idea kielce 2019 hackathon. the application is used to search for stores open on non-commercial sundays.":
-    "Backend w .NET do aplikacji na hackathon IDEA KIELCE 2019. Aplikacja pozwala na wyszukiwanie otwartych sklepów w niedziele niehandlowe w Polsce"
+    "Backend w .NET do aplikacji na hackathon IDEA KIELCE 2019. Aplikacja pozwala na wyszukiwanie otwartych sklepów w niedziele niehandlowe w Polsce",
+	
+	"gui to built-in windows 'robocopy' tool in .net 8 - winforms":
+	"GUI do wbudowanego narzędzia w Windowsa 'robocopy' w .NET 8 oraz WinForms"
 };
 
 function translateDescription(text) {
