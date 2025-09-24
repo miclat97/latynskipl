@@ -8,8 +8,8 @@ const dictENtoPL = {
   "api in .net 8 for \"to do\" app using cqrs, mediatr, unitofwork, baserepository patterns with tests in xunit - with docker support":
     "API w .NET 8 dla aplikacji typu „To do” z wykorzystaniem wzorców CQRS, MediatR, UnitOfWork, BaseRepository oraz testów w xUnit - z obsługą Dockera.",
 
-  "windows desktop application in (.net 8, wpf) to quickly open any filetype - with built-in file explorer as well. app can open and play videos, music, open, zoom or scale images as well. program can also open any text document or any other file and read it as text (ascii characters)":
-    "Aplikacja desktopowa (w .NET 8, WPF) do szybkiego przeglądania wszystkich typów plików (z wbudowanym eksploratorem plików). Potrafi odtwarzać filmy, muzykę, otwierać, powiększać oraz skalować zdjęcia. Program jest w stanie też odczytać dowolny tekst z każdego innego typu pliku (w formie zwykłych znaków ASCII)",
+  "windows desktop application in .net 9 (wpf) to quickly open any filetype - with built-in file explorer as well. app can open and play videos, music, open, zoom or scale images as well. program can also open any text document or any other file and read it as text (ascii characters)":
+    "Aplikacja desktopowa w .NET 9 (WPF) do szybkiego przeglądania wszystkich typów plików (z wbudowanym eksploratorem plików). Potrafi odtwarzać filmy, muzykę, otwierać, powiększać oraz skalować zdjęcia. Program jest w stanie też odczytać dowolny tekst z każdego innego typu pliku (w formie zwykłych znaków ASCII)",
 
   "simple calculator plugin to enova 365 erp with unit tests in .net framework 4.6.1":
     "Prosta wtyczka kalkulatora do Enova 365 ERP z testami jednostkowymi w .NET Framework 4.6.1.",
