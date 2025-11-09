@@ -39,7 +39,10 @@ const dictENtoPL = {
     "Backend w .NET do aplikacji na hackathon IDEA KIELCE 2019. Aplikacja pozwala na wyszukiwanie otwartych sklepów w niedziele niehandlowe w Polsce",
 	
 	"gui to built-in windows 'robocopy' tool in .net 8 - winforms":
-	"GUI do wbudowanego narzędzia w Windowsa 'robocopy' w .NET 8 oraz WinForms"
+	"GUI do wbudowanego narzędzia w Windowsa 'robocopy' w .NET 8 oraz WinForms",
+	
+	"simple console app in .net framework 4.7.2 to backup outlook calendar automatically and save it in documents user folder in .ics format":
+	"Prosta aplikacja konsolowa w .NET Frameworku 4.7.2 do automatycznego backupowania kalendarza z Outlooka i zapisania go w formie pliku .ics w folderze dokumentów użytkownika"
 };
 
 function translateDescription(text) {
