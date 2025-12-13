@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Czarny Kot: Łowca Bananów</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Menu Layer -->
+        <div id="menu-layer">
+            <h1>Opcje Gry</h1>
+            <div class="menu-item">
+                <label>Czas gry (s):</label>
+                <input type="number" id="setting-time" value="60" min="10" max="300">
+            </div>
+            <div class="menu-item">
+                <label>Poziom trudności:</label>
+                <select id="setting-difficulty">
+                    <option value="easy">Łatwy</option>
+                    <option value="normal" selected>Normalny</option>
+                    <option value="hard">Trudny</option>
+                </select>
+            </div>
+            <div class="menu-item">
+                <label>Wielkość świata:</label>
+                <select id="setting-size">
+                    <option value="small">Mały (1000x1000)</option>
+                    <option value="medium" selected>Średni (2000x2000)</option>
+                    <option value="large">Duży (4000x4000)</option>
+                </select>
+            </div>
+            <div class="menu-item">
+                <label>Szybkość kota:</label>
+                <input type="range" id="setting-speed" min="3" max="15" value="5">
+            </div>
+            <button id="btn-start" class="start-btn">GRAJ</button>
+        </div>
+
+        <div id="ui-layer" style="display:none;">
+            <div id="score-board">Wynik: <span id="score">0</span> | Czas: <span id="timer">60</span></div>
+            <div id="message"></div>
+            <div id="brawo-message" class="hidden">BRAWO! +10</div>
+        </div>
+        <canvas id="gameCanvas"></canvas>
+
+        <div id="mobile-controls" style="display:none;">
+            <div class="control-row">
+                <button id="btn-up" class="control-btn">▲</button>
+            </div>
+            <div class="control-row">
+                <button id="btn-left" class="control-btn">◄</button>
+                <button id="btn-down" class="control-btn">▼</button>
+                <button id="btn-right" class="control-btn">►</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js')
+                .then(() => console.log('Service Worker registered'))
+                .catch((err) => console.log('Service Worker error', err));
+        }
+    </script>
+    <script src="game.js"></script>
+</body>
+</html>

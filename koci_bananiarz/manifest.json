@@ -1,0 +1,16 @@
+{
+  "name": "Czarny Kot: Łowca Bananów",
+  "short_name": "Czarny Kot",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#333333",
+  "theme_color": "#8bc34a",
+  "description": "Gra o czarnym kocie zbierającym banany.",
+  "icons": [
+    {
+      "src": "face.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

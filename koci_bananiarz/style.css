@@ -1,0 +1,162 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    touch-action: none; /* Prevent browser zooming/scrolling */
+}
+
+#game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas {
+    background-color: #8bc34a; /* Grass/Floor color */
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    display: block;
+}
+
+#ui-layer {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    pointer-events: none;
+    z-index: 10;
+}
+
+#menu-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.menu-item {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.menu-item label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.start-btn {
+    margin-top: 20px;
+    padding: 10px 30px;
+    font-size: 24px;
+    background: #8bc34a;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.start-btn:hover {
+    background: #7cb342;
+}
+
+#brawo-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    font-weight: bold;
+    color: #ffeb3b;
+    text-shadow: 2px 2px 0 #000;
+    pointer-events: none;
+    animation: pop 0.5s ease-out;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes pop {
+    0% { transform: translate(-50%, -50%) scale(0); }
+    80% { transform: translate(-50%, -50%) scale(1.2); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+#score-board {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    border: 2px solid #000;
+}
+
+#message {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    font-size: 18px;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+}
+
+/* Mobile Controls */
+#mobile-controls {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    z-index: 20;
+    opacity: 0.7;
+}
+
+/* Hide controls on devices that clearly have a mouse,
+   but keep them visible by default for touch/hybrid.
+   Ideally we detect touch support in JS, but this is a simple CSS approach. */
+@media (min-width: 1024px) {
+    /* Optional: hide on large screens if desired, but kept for testing */
+    /* display: none; */
+}
+
+.control-row {
+    display: flex;
+    gap: 10px;
+}
+
+.control-btn {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 2px solid white;
+    border-radius: 50%;
+    color: white;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.control-btn:active {
+    background-color: rgba(255, 255, 255, 0.5);
+    color: black;
+}
