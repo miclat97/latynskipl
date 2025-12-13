@@ -117,7 +117,7 @@ canvas {
 /* Mobile Controls */
 #mobile-controls {
     position: absolute;
-    bottom: 20px;
+    bottom: 80px; /* Increased to avoid system bars */
     right: 20px;
     display: flex;
     flex-direction: column;
@@ -125,6 +125,7 @@ canvas {
     gap: 10px;
     z-index: 20;
     opacity: 0.7;
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
 /* Hide controls on devices that clearly have a mouse,

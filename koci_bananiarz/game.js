@@ -319,11 +319,11 @@ function spawnCollectible(list, obstacles, w, h) {
     if (r > 0.7 && r < 0.9) {
         type = 'apple';
         color = '#f44336'; // Red
-        points = 2;
+        points = -1;
     } else if (r >= 0.9) {
         type = 'cherry';
         color = '#9c27b0'; // Purple/Dark Red
-        points = 3;
+        points = -1;
     }
 
     list.push({
@@ -501,6 +501,11 @@ function update(dt) {
                 showBrawo();
             }
 
+            // Show floating text for negative points
+            if (c.points < 0) {
+                 showFloatingText(c.points, c.x, c.y);
+            }
+
             currentCollectibles.splice(i, 1);
         }
     }
@@ -527,6 +532,18 @@ function showBrawo() {
     setTimeout(() => {
         brawoElement.classList.add('hidden');
     }, 2000);
+}
+
+// Simple system for temporary floating texts
+const floatingTexts = [];
+
+function showFloatingText(text, x, y) {
+    floatingTexts.push({
+        text: text,
+        x: x,
+        y: y,
+        life: 60 // frames
+    });
 }
 
 function rectIntersect(x1, y1, w1, h1, x2, y2, w2, h2) {
@@ -625,20 +642,42 @@ function draw() {
             ctx.fill();
             ctx.stroke();
 
-            // Stem for fruit
-            ctx.beginPath();
-            ctx.moveTo(c.x, c.y - c.size);
             if (c.type === 'banana') {
-                 ctx.lineTo(c.x + 5, c.y - c.size - 5);
+                ctx.font = (c.size * 2) + 'px serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('🍌', c.x, c.y);
             } else {
-                 ctx.lineTo(c.x, c.y - c.size - 5);
+                ctx.fillStyle = c.color;
+                ctx.beginPath();
+                ctx.arc(c.x, c.y, c.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // Stem for fruit
+                ctx.beginPath();
+                ctx.moveTo(c.x, c.y - c.size);
+                ctx.lineTo(c.x, c.y - c.size - 5);
+                ctx.stroke();
             }
-            ctx.stroke();
         }
     }
 
     // Player
     drawPlayer();
+
+    // Draw Floating Texts
+    for (let i = floatingTexts.length - 1; i >= 0; i--) {
+        const ft = floatingTexts[i];
+        ctx.fillStyle = 'red';
+        ctx.font = 'bold 20px Arial';
+        ctx.fillText(ft.text, ft.x, ft.y);
+        ft.y -= 1;
+        ft.life--;
+        if (ft.life <= 0) {
+            floatingTexts.splice(i, 1);
+        }
+    }
 
     ctx.restore();
 
