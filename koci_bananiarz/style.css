@@ -11,6 +11,7 @@ body {
     position: relative;
     width: 100vw;
     height: 100vh;
+    height: 100dvh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -117,8 +118,8 @@ canvas {
 /* Mobile Controls */
 #mobile-controls {
     position: absolute;
-    bottom: 80px; /* Increased to avoid system bars */
-    right: 20px;
+    bottom: 120px; /* Increased to avoid system bars */
+    right: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
