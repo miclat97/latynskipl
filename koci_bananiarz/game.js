@@ -368,8 +368,14 @@
       var fh = 50 + Math.random() * 80;
       var pos = getSafePosition(fw, fh, walls, w, h);
 
-      // nie blokuj wejścia
-      if (Math.abs(pos.x - w / 2) < 60 && pos.y > h - 100) continue;
+      // nie blokuj wejścia - strefa bezpieczna wokół drzwi i spawnu gracza
+      // Drzwi są na środku (w/2 - 20), gracz spawnuje się nieco wyżej
+      var safeZoneX = w / 2 - 60;
+      var safeZoneY = h - 150;
+      var safeZoneW = 120;
+      var safeZoneH = 150;
+
+      if (rectIntersect(pos.x, pos.y, fw, fh, safeZoneX, safeZoneY, safeZoneW, safeZoneH)) continue;
 
       walls.push({ x: pos.x, y: pos.y, width: fw, height: fh, color: '#5d4037' });
     }
@@ -488,11 +494,19 @@
     if (!hitWallY) player.y = nextY;
 
     // Camera
-    camera.x = player.x - camera.width / 2 + player.width / 2;
-    camera.y = player.y - camera.height / 2 + player.height / 2;
+    if (worldBounds.w < camera.width) {
+      camera.x = -(camera.width - worldBounds.w) / 2;
+    } else {
+      camera.x = player.x - camera.width / 2 + player.width / 2;
+      camera.x = clamp(camera.x, 0, worldBounds.w - camera.width);
+    }
 
-    camera.x = clamp(camera.x, 0, worldBounds.w - camera.width);
-    camera.y = clamp(camera.y, 0, worldBounds.h - camera.height);
+    if (worldBounds.h < camera.height) {
+      camera.y = -(camera.height - worldBounds.h) / 2;
+    } else {
+      camera.y = player.y - camera.height / 2 + player.height / 2;
+      camera.y = clamp(camera.y, 0, worldBounds.h - camera.height);
+    }
 
     // Collectibles
     for (var cidx = currentCollectibles.length - 1; cidx >= 0; cidx--) {
