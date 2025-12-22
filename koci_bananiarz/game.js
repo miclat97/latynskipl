@@ -74,6 +74,15 @@
     direction: 1 // 1 right, -1 left
   };
 
+  // Dog
+  var dog = {
+    x: 0, y: 0,
+    width: 30, height: 30,
+    color: '#8d6e63', // Brown
+    speed: 3, // Slower than player
+    active: false
+  };
+
   // Current Active World Data
   var currentWalls = [];
   var currentCollectibles = [];
@@ -86,6 +95,15 @@
 
   // --- Start ---
   function init() {
+    // Expose for testing
+    window.__TEST_ACCESS__ = {
+      player: player,
+      dog: dog,
+      getScore: function() { return score; },
+      setScore: function(s) { score = s; scoreElement.innerText = score; },
+      overworld: overworld
+    };
+
     canvas = document.getElementById('gameCanvas');
     ctx = canvas.getContext('2d');
 
@@ -332,6 +350,12 @@
     var pPos = getSafePosition(player.width, player.height, obstacles, WORLD_WIDTH, WORLD_HEIGHT);
     player.x = pPos.x;
     player.y = pPos.y;
+
+    // Dog Start
+    var dPos = getSafePosition(dog.width, dog.height, obstacles, WORLD_WIDTH, WORLD_HEIGHT);
+    dog.x = dPos.x;
+    dog.y = dPos.y;
+    dog.active = true;
   }
 
   function spawnCollectible(list, obstacles, w, h) {
@@ -508,6 +532,32 @@
       camera.y = clamp(camera.y, 0, worldBounds.h - camera.height);
     }
 
+    // Dog Logic (only in Overworld)
+    if (currentState === STATE.OVERWORLD && dog.active) {
+      // Move towards player
+      var dx = (player.x + player.width / 2) - (dog.x + dog.width / 2);
+      var dy = (player.y + player.height / 2) - (dog.y + dog.height / 2);
+      var dist = hypot2(dx, dy);
+
+      if (dist > 5) { // Don't jitter when on top
+        var angle = Math.atan2(dy, dx);
+        dog.x += Math.cos(angle) * dog.speed;
+        dog.y += Math.sin(angle) * dog.speed;
+      }
+
+      // Dog-Player Collision
+      if (rectIntersect(player.x, player.y, player.width, player.height, dog.x, dog.y, dog.width, dog.height)) {
+        score -= 5;
+        scoreElement.innerText = score;
+        showFloatingText("-5", player.x, player.y - 20);
+
+        // Respawn dog
+        var newPos = getSafePosition(dog.width, dog.height, currentWalls, worldBounds.w, worldBounds.h);
+        dog.x = newPos.x;
+        dog.y = newPos.y;
+      }
+    }
+
     // Collectibles
     for (var cidx = currentCollectibles.length - 1; cidx >= 0; cidx--) {
       var c = currentCollectibles[cidx];
@@ -560,6 +610,50 @@
       ctx.lineTo(worldBounds.w, y);
       ctx.stroke();
     }
+  }
+
+  function drawDog() {
+    if (!dog.active) return;
+    ctx.save();
+    ctx.translate(dog.x + dog.width / 2, dog.y + dog.height / 2);
+
+    // Face player roughly
+    if (player.x < dog.x) ctx.scale(-1, 1);
+
+    // Body
+    ctx.fillStyle = dog.color;
+    ctx.beginPath();
+    ctx.arc(0, 0, dog.width / 2, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Ears (floppy)
+    ctx.fillStyle = '#5d4037';
+    ctx.beginPath();
+    ctx.ellipse(-10, -5, 6, 12, 0.5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.ellipse(10, -5, 6, 12, -0.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Eyes
+    ctx.fillStyle = 'white';
+    ctx.beginPath();
+    ctx.arc(-5, -2, 3, 0, Math.PI * 2);
+    ctx.arc(5, -2, 3, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = 'black';
+    ctx.beginPath();
+    ctx.arc(-5, -2, 1, 0, Math.PI * 2);
+    ctx.arc(5, -2, 1, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Nose
+    ctx.fillStyle = 'black';
+    ctx.beginPath();
+    ctx.arc(0, 5, 4, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
   }
 
   function drawPlayer() {
@@ -731,6 +825,11 @@
           ctx.stroke();
         }
       }
+    }
+
+    // Dog
+    if (currentState === STATE.OVERWORLD) {
+      drawDog();
     }
 
     // Player
