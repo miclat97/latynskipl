@@ -19,9 +19,9 @@
             <div class="menu-item">
                 <label>Poziom trudności:</label>
                 <select id="setting-difficulty">
-                    <option value="easy">Łatwy</option>
-                    <option value="normal" selected>Normalny</option>
-                    <option value="hard">Trudny</option>
+                    <option value="easy">Łatwy (bez psa)</option>
+                    <option value="normal" selected>Normalny (1 pies)</option>
+                    <option value="hard">Trudny (2 psy)</option>
                 </select>
             </div>
             <div class="menu-item">
@@ -44,6 +44,7 @@
             <div id="message"></div>
             <div id="brawo-message" class="hidden">BRAWO! +10</div>
         </div>
+        <button id="btn-restart" class="start-btn" style="display: none; pointer-events: auto;">Odśwież</button>
         <canvas id="gameCanvas"></canvas>
 
         <div id="mobile-controls" style="display:none;">

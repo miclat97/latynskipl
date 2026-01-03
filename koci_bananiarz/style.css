@@ -162,3 +162,14 @@ canvas {
     background-color: rgba(255, 255, 255, 0.5);
     color: black;
 }
+#btn-restart {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    /* Reuse start-btn styles but ensure it is visible over overlay */
+    padding: 15px 40px;
+    font-size: 28px;
+    box-shadow: 0 0 10px white;
+}
