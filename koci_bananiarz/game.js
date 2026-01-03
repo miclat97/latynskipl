@@ -75,13 +75,7 @@
   };
 
   // Dog
-  var dog = {
-    x: 0, y: 0,
-    width: 30, height: 30,
-    color: '#8d6e63', // Brown
-    speed: 3, // Slower than player
-    active: false
-  };
+  var dogs = []; // Array of dog objects
 
   // Current Active World Data
   var currentWalls = [];
@@ -98,7 +92,7 @@
     // Expose for testing
     window.__TEST_ACCESS__ = {
       player: player,
-      dog: dog,
+      dogs: dogs,
       getScore: function() { return score; },
       setScore: function(s) { score = s; scoreElement.innerText = score; },
       overworld: overworld
@@ -111,6 +105,14 @@
     timerElement = document.getElementById('timer');
     messageElement = document.getElementById('message');
     brawoElement = document.getElementById('brawo-message');
+
+    // Restart button
+    var btnRestart = document.getElementById('btn-restart');
+    if (btnRestart) {
+        btnRestart.addEventListener('click', function() {
+            window.location.reload();
+        });
+    }
 
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
@@ -177,6 +179,8 @@
     timerElement.innerText = timeLeft;
     messageElement.innerText = '';
     if (brawoElement && brawoElement.classList) brawoElement.classList.add('hidden');
+    var btnRestart = document.getElementById('btn-restart');
+    if (btnRestart) btnRestart.style.display = 'none';
 
     if (timerInterval) clearInterval(timerInterval);
 
@@ -199,7 +203,9 @@
   function gameOver() {
     currentState = STATE.GAME_OVER;
     if (timerInterval) clearInterval(timerInterval);
-    messageElement.innerText = 'KONIEC GRY! Twój wynik: ' + score + '. Odśwież stronę.';
+    messageElement.innerText = 'KONIEC GRY! Twój wynik: ' + score + '.';
+    var btnRestart = document.getElementById('btn-restart');
+    if (btnRestart) btnRestart.style.display = 'block';
   }
 
   function handleKey(e, isDown) {
@@ -279,6 +285,7 @@
     overworld.collectibles = [];
     overworld.houses = [];
     interiors.length = 0;
+    dogs.length = 0;
 
     // Difficulty Modifiers
     var houseCount = 8;
@@ -352,10 +359,22 @@
     player.y = pPos.y;
 
     // Dog Start
-    var dPos = getSafePosition(dog.width, dog.height, obstacles, WORLD_WIDTH, WORLD_HEIGHT);
-    dog.x = dPos.x;
-    dog.y = dPos.y;
-    dog.active = true;
+    var dogCount = 1;
+    if (difficulty === 'easy') dogCount = 0;
+    if (difficulty === 'hard') dogCount = 2;
+
+    for (var i = 0; i < dogCount; i++) {
+      var d = {
+        x: 0, y: 0,
+        width: 30, height: 30,
+        color: '#8d6e63', // Brown
+        speed: 3
+      };
+      var dPos = getSafePosition(d.width, d.height, obstacles, WORLD_WIDTH, WORLD_HEIGHT);
+      d.x = dPos.x;
+      d.y = dPos.y;
+      dogs.push(d);
+    }
   }
 
   function spawnCollectible(list, obstacles, w, h) {
@@ -533,28 +552,31 @@
     }
 
     // Dog Logic (only in Overworld)
-    if (currentState === STATE.OVERWORLD && dog.active) {
-      // Move towards player
-      var dx = (player.x + player.width / 2) - (dog.x + dog.width / 2);
-      var dy = (player.y + player.height / 2) - (dog.y + dog.height / 2);
-      var dist = hypot2(dx, dy);
+    if (currentState === STATE.OVERWORLD) {
+      for (var i = 0; i < dogs.length; i++) {
+        var d = dogs[i];
+        // Move towards player
+        var dx = (player.x + player.width / 2) - (d.x + d.width / 2);
+        var dy = (player.y + player.height / 2) - (d.y + d.height / 2);
+        var dist = hypot2(dx, dy);
 
-      if (dist > 5) { // Don't jitter when on top
-        var angle = Math.atan2(dy, dx);
-        dog.x += Math.cos(angle) * dog.speed;
-        dog.y += Math.sin(angle) * dog.speed;
-      }
+        if (dist > 5) { // Don't jitter when on top
+          var angle = Math.atan2(dy, dx);
+          d.x += Math.cos(angle) * d.speed;
+          d.y += Math.sin(angle) * d.speed;
+        }
 
-      // Dog-Player Collision
-      if (rectIntersect(player.x, player.y, player.width, player.height, dog.x, dog.y, dog.width, dog.height)) {
-        score -= 5;
-        scoreElement.innerText = score;
-        showFloatingText("-5", player.x, player.y - 20);
+        // Dog-Player Collision
+        if (rectIntersect(player.x, player.y, player.width, player.height, d.x, d.y, d.width, d.height)) {
+          score -= 5;
+          scoreElement.innerText = score;
+          showFloatingText("-5", player.x, player.y - 20);
 
-        // Respawn dog
-        var newPos = getSafePosition(dog.width, dog.height, currentWalls, worldBounds.w, worldBounds.h);
-        dog.x = newPos.x;
-        dog.y = newPos.y;
+          // Respawn dog
+          var newPos = getSafePosition(d.width, d.height, currentWalls, worldBounds.w, worldBounds.h);
+          d.x = newPos.x;
+          d.y = newPos.y;
+        }
       }
     }
 
@@ -612,18 +634,17 @@
     }
   }
 
-  function drawDog() {
-    if (!dog.active) return;
+  function drawDog(d) {
     ctx.save();
-    ctx.translate(dog.x + dog.width / 2, dog.y + dog.height / 2);
+    ctx.translate(d.x + d.width / 2, d.y + d.height / 2);
 
     // Face player roughly
-    if (player.x < dog.x) ctx.scale(-1, 1);
+    if (player.x < d.x) ctx.scale(-1, 1);
 
     // Body
-    ctx.fillStyle = dog.color;
+    ctx.fillStyle = d.color;
     ctx.beginPath();
-    ctx.arc(0, 0, dog.width / 2, 0, Math.PI * 2);
+    ctx.arc(0, 0, d.width / 2, 0, Math.PI * 2);
     ctx.fill();
 
     // Ears (floppy)
@@ -829,7 +850,9 @@
 
     // Dog
     if (currentState === STATE.OVERWORLD) {
-      drawDog();
+      for (var i = 0; i < dogs.length; i++) {
+        drawDog(dogs[i]);
+      }
     }
 
     // Player
