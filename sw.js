@@ -1,25 +1,25 @@
-var CACHE_VERSION = 'v4';
+var CACHE_VERSION = 'v82';
 var CACHE_PREFIX = 'latynskipl-cache-';
 var CACHE_NAME = CACHE_PREFIX + CACHE_VERSION;
 
 var ASSETS = [
-	"/",
-	"/android-chrome-192x192.png",
-	"/android-chrome-512x512.png",
-	"/apple-touch-icon.png",
-	"/favicon-16x16.png",
-	"/favicon-32x32.png",
-	"/favicon.ico",
-	"/index.html",
-	"/profile.jpg",
-	"/script.js",
-	"/site.webmanifest",
-	"/style.css",
-	"/koci_bananiarz/index.html",
-	"/koci_bananiarz/style.css",
-	"/koci_bananiarz/game.js",
-	"/koci_bananiarz/face.jpeg",
-	"/koci_bananiarz/manifest.json"
+  "/",
+  "/android-chrome-192x192.png",
+  "/android-chrome-512x512.png",
+  "/apple-touch-icon.png",
+  "/favicon-16x16.png",
+  "/favicon-32x32.png",
+  "/favicon.ico",
+  "/index.html",
+  "/profile.jpg",
+  "/script.js",
+  "/site.webmanifest",
+  "/style.css",
+  "/koci_bananiarz/index.html",
+  "/koci_bananiarz/style.css",
+  "/koci_bananiarz/game.js",
+  "/koci_bananiarz/face.jpeg",
+  "/koci_bananiarz/manifest.json"
 ];
 
 self.addEventListener('install', function (event) {
@@ -49,25 +49,26 @@ self.addEventListener('activate', function (event) {
 });
 
 self.addEventListener('fetch', function (event) {
-  // network first when opening PWA app (to force possible updates when new version of one of those files will be available)
-  if (event.request && event.request.mode === 'navigate') {
-    event.respondWith(
-      fetch(event.request).then(function (response) {
-        var copy = response.clone();
-        caches.open(CACHE_NAME).then(function (cache) {
-          cache.put(event.request, copy);
-        });
-        return response;
-      }).catch(function () {
-        return caches.match(event.request);
-      })
-    );
+  // Ignorujemy zapytania do innych serwerów (np. API GitHuba)
+  if (!event.request.url.startsWith(self.location.origin)) {
     return;
   }
 
+  // Uniwersalna strategia "Stale-While-Revalidate" dla WSZYSTKICH plików na Twojej domenie
   event.respondWith(
-    caches.match(event.request).then(function (cached) {
-      return cached || fetch(event.request);
+    caches.match(event.request).then(function (cachedResponse) {
+      // Pobieranie z sieci w tle
+      var fetchPromise = fetch(event.request).then(function (networkResponse) {
+        caches.open(CACHE_NAME).then(function (cache) {
+          cache.put(event.request, networkResponse.clone());
+        });
+        return networkResponse;
+      }).catch(function() {
+        // Ignorujemy błędy sieci (np. tryb samolotowy)
+      });
+
+      // Zwracamy OD RAZU plik z cache (nawet HTML!). Jeśli go nie ma - czekamy na sieć.
+      return cachedResponse || fetchPromise;
     })
   );
 });

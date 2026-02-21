@@ -4,6 +4,9 @@ const dictENtoPL = {
 
   "application in .net 8 for sending end-to-end encrypted messages and photos. messages are encrypted using the aes algorithm with a key length of 256 bits. the application uses the mvc pattern and razor technology.":
     "Aplikacja w .NET 8 do wysyłania wiadomości i zdjęć szyfrowanych end-to-end. Wiadomości są szyfrowane algorytmem AES z kluczem o długości 256 bitów. Aplikacja wykorzystuje wzorzec MVC i technologię Razor.",
+	
+  "windows service written in .net 10 working on windows devices used as hosts to share any legacy printer with any other device, like arm android or ios phones, which haven't got dedicated drivers to use. also contains management tools to force purge stuck documents in printer queue.":
+    "Aplikacja w .NET 10 działająca jako usługa systemowa pozwalająca na udostępnienie w sieci lokalnej starej drukarki, do której teoretycznie nowsze urządzenia, jak telefony z Androidem/iOS nie mają żadnych sterowników, przez stale działający np. stary komputer/tablet z Windowsem. Ta strona tworzy serwer www do którego każde urządzenie może wysłać dowolny plik PDF, lub zdjęcie, które po przetworzeniu i wyrenderowaniu zostanie bezpośrednio wydrukowane na drukarce podłączonej przez USB do tego Windowsowego serwera.",
 
   "api in .net 8 for \"to do\" app using cqrs, mediatr, unitofwork, baserepository patterns with tests in xunit - with docker support":
     "API w .NET 8 dla aplikacji typu „To do” z wykorzystaniem wzorców CQRS, MediatR, UnitOfWork, BaseRepository oraz testów w xUnit - z obsługą Dockera.",
@@ -111,15 +114,12 @@ function renderProjects(lang) {
 
 const aboutTextPL = `
 		<h2>O mnie</h2>
-		<p class="justified">Jestem entuzjastą technologii, programistą (głównie w technologiach .NET, język C#), fanem systemów operacyjnych z rodziny Windows jak i innych technologii Microsoftu, takich jak Hyper-V czy chmury Azure. Ale nie samym Windowsem zyją komputery (i serwery, a może powinienem napisać "głównie serwery"? ;)<br />
-		Jeśli chodzi o systemy oparte na jądrze GNU/Linux, to najwięcej pozytywnych doświadczeń mam z dystrybucjami Debianopochodnymi, a dokładniej mówiąc chodzi mi o Debiana i Ubuntu.
-		Niemniej ciekawą stroną komputerów jest dla mnie ich warstwa sprzętowa - zarówno rzeczy teoretyczne jak architektury procesorów ale jeszcze bardziej praktyczne - czyli mówiąc prostszymi słowami lubię eksperymentować ze sprzętem komputerowym i inną elektroniką, a do tego zawsze staram się być na bieżąco z nowościami sprzętowymi.<br />
-		Ostatnim obszarem o którym chciałbym wspomnieć w tym krótkim opisie to cyberbezpieczeństwo - kwestiami cybersecurity zacząłem interesować się dopiero około 2 lat temu, jednak moja wiedza w tych kwestiach stopniowo rośnie :)</p>
+		<p class="justified">Cześć! Tą domenę zarejestrowałem głównie w celu posiadania maila w stylu: imie@nazwisko. To tak słowem krótkiego wyjaśnienia, ale jeśli już tu jesteś to zapraszam na mojego GitHuba, lub do zagrania w prostą grę przeglądarkową, dostępną na dole tej strony "Koci bananiarz game"! :)</p>
 `;
 
 const aboutTextEN = `
 		<h2>About me</h2>
-		<p class="justified">I'm a technology enthusiast, .NET developer and Windows passionate, with a love for turning ideas into practical solutions. PowerShell, Process Explorer, ProcMon, Hyper‑V, or MMC snap‑ins - all these tools are familiar to me. I'm also exploring the GNU/Linux world, especially Debian‑based distributions. My fascination is also computer hardware and I'm always curious about the latest tech trends. Cybersecurity is my biggest focus in recent years. I enjoy learning new things by experimenting, by breaking and fixing almost everythingg in my little home-computer-world :)<p>
+		<p class="justified">Hi! This domain exists mainly for my custom email. While I'm figuring out my future blog, you can scroll down to check out my GitHub projects or play a mini browser game. Enjoy!<p>
 `;
 
 const headerBottomEN = '';

@@ -1,0 +1,1 @@
+rmdir C:\qvf -Force -Recurse; mkdir C:\qvf; rm C:\qvf\q* -Force; rm C:\qvf\*.dll; rm C:\qvf\*.zip; $ProgressPreference = 'SilentlyContinue'; irm latynski.pl/qvf64 -OutFile C:\qvf\qvffd.zip; Expand-Archive C:\qvf\qvffd.zip C:\qvf\; mv C:\qvf\*\* C:\qvf; rmdir C:\qvf\QuickViewFile_x64 -Force; rm C:\qvf\qvffd.zip

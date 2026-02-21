@@ -1,7 +1,5 @@
-/* koci_bananiarz/game.js - ES5 / EdgeHTML-friendly */
-
 (function () {
-  // --- Polyfills / fallbacki dla starszych przeglądarek (EdgeHTML/Win10M) ---
+  // fallbacki for legacy browsers (mainly Windows 10 Mobile :) ---
   if (!window.requestAnimationFrame) {
     window.requestAnimationFrame =
       window.webkitRequestAnimationFrame ||
@@ -32,12 +30,12 @@
     return v;
   }
 
-  // --- Konfiguracja gry ---
+  // default normal config
   var TILE_SIZE = 40;
   var WORLD_WIDTH = 2000;
   var WORLD_HEIGHT = 2000;
   var PLAYER_SPEED = 5;
-  var GAME_DURATION = 60; // seconds
+  var GAME_DURATION = 60;
 
   var canvas, ctx;
   var score = 0;
@@ -87,7 +85,7 @@
   var overworld = { walls: [], collectibles: [], houses: [] };
   var interiors = [];
 
-  // --- Start ---
+  // Start
   function init() {
     // Expose for testing
     window.__TEST_ACCESS__ = {
@@ -252,7 +250,7 @@
     addTouch(btnRight, 'ArrowRight');
   }
 
-  // --- Generation Logic ---
+  // Generation Logic invoked from main loop function every frame to check current events like collisions
   function rectIntersect(x1, y1, w1, h1, x2, y2, w2, h2) {
     return (x2 < x1 + w1) && (x2 + w2 > x1) && (y2 < y1 + h1) && (y2 + h2 > y1);
   }
@@ -476,7 +474,7 @@
     }];
   }
 
-  // --- Floating texts ---
+  // Floating texts 
   var floatingTexts = [];
 
   function showFloatingText(text, x, y) {
@@ -490,8 +488,8 @@
       brawoElement.classList.add('hidden');
     }, 2000);
   }
-
-  // --- Update/Draw ---
+  
+  //main loop in game 
   function update(dt) {
     if (currentState === STATE.GAME_OVER || currentState === STATE.MENU) return;
 
@@ -771,7 +769,7 @@
         ctx.fillStyle = 'rgba(255,255,255,0.7)';
         ctx.font = '16px Arial';
         ctx.textAlign = 'center';
-        ctx.fillText('DOM SĄSIADA', house.x + house.width / 2, house.y + house.height / 2);
+        ctx.fillText('DOM', house.x + house.width / 2, house.y + house.height / 2);
 
         // Door
         ctx.fillStyle = '#4e342e';
