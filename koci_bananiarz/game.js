@@ -75,6 +75,9 @@
   // Dog
   var dogs = []; // Array of dog objects
 
+  // Bonus Cat
+  var bonusCat = null;
+
   // Current Active World Data
   var currentWalls = [];
   var currentCollectibles = [];
@@ -91,6 +94,7 @@
     window.__TEST_ACCESS__ = {
       player: player,
       dogs: dogs,
+      bonusCat: function() { return bonusCat; },
       getScore: function() { return score; },
       setScore: function(s) { score = s; scoreElement.innerText = score; },
       overworld: overworld
@@ -134,6 +138,11 @@
     var sizeVal = document.getElementById('setting-size').value;
     var speedVal = parseInt(document.getElementById('setting-speed').value, 10);
 
+    var catColorElement = document.getElementById('setting-cat');
+    var catColor = catColorElement ? catColorElement.value : 'black';
+    var bonusCatActiveElement = document.getElementById('setting-bonus-cat');
+    var bonusCatActive = bonusCatActiveElement ? bonusCatActiveElement.checked : true;
+
     if (!isFinite(timeVal) || timeVal <= 0) timeVal = 60;
     if (!isFinite(speedVal) || speedVal <= 0) speedVal = 5;
 
@@ -141,6 +150,17 @@
     GAME_DURATION = timeVal;
     PLAYER_SPEED = speedVal;
     player.speed = PLAYER_SPEED;
+    player.color = catColor;
+
+    var oppositeColor = catColor === 'black' ? '#f08000' : 'black';
+    bonusCat = {
+        active: bonusCatActive,
+        x: 0, y: 0,
+        width: 30, height: 30,
+        color: oppositeColor,
+        speed: PLAYER_SPEED * 0.9,
+        direction: 1
+    };
 
     if (sizeVal === 'small') {
       WORLD_WIDTH = 1000; WORLD_HEIGHT = 1000;
@@ -373,6 +393,13 @@
       d.y = dPos.y;
       dogs.push(d);
     }
+
+    // Bonus Cat Start
+    if (bonusCat && bonusCat.active) {
+      var bcPos = getSafePosition(bonusCat.width, bonusCat.height, obstacles, WORLD_WIDTH, WORLD_HEIGHT);
+      bonusCat.x = bcPos.x;
+      bonusCat.y = bcPos.y;
+    }
   }
 
   function spawnCollectible(list, obstacles, w, h) {
@@ -474,7 +501,7 @@
     }];
   }
 
-  // Floating texts 
+  // Floating texts
   var floatingTexts = [];
 
   function showFloatingText(text, x, y) {
@@ -488,8 +515,8 @@
       brawoElement.classList.add('hidden');
     }, 2000);
   }
-  
-  //main loop in game 
+
+  //main loop in game
   function update(dt) {
     if (currentState === STATE.GAME_OVER || currentState === STATE.MENU) return;
 
@@ -574,6 +601,34 @@
           var newPos = getSafePosition(d.width, d.height, currentWalls, worldBounds.w, worldBounds.h);
           d.x = newPos.x;
           d.y = newPos.y;
+        }
+      }
+
+      // Bonus Cat Logic
+      if (bonusCat && bonusCat.active) {
+        var bc = bonusCat;
+        var bdx = (player.x + player.width / 2) - (bc.x + bc.width / 2);
+        var bdy = (player.y + player.height / 2) - (bc.y + bc.height / 2);
+        var bdist = hypot2(bdx, bdy);
+
+        if (bdist > 5) {
+          var bangle = Math.atan2(bdy, bdx);
+          bc.x += Math.cos(bangle) * bc.speed;
+          bc.y += Math.sin(bangle) * bc.speed;
+          bc.direction = Math.cos(bangle) >= 0 ? 1 : -1;
+        }
+
+        if (rectIntersect(player.x, player.y, player.width, player.height, bc.x, bc.y, bc.width, bc.height)) {
+          var randomScore = Math.floor(Math.random() * 21) - 10;
+          score += randomScore;
+          scoreElement.innerText = score;
+
+          var textStr = randomScore >= 0 ? "+" + randomScore : String(randomScore);
+          showFloatingText(textStr, player.x, player.y - 20);
+
+          var newBcPos = getSafePosition(bc.width, bc.height, currentWalls, worldBounds.w, worldBounds.h);
+          bc.x = newBcPos.x;
+          bc.y = newBcPos.y;
         }
       }
     }
@@ -675,16 +730,16 @@
     ctx.restore();
   }
 
-  function drawPlayer() {
+  function drawCat(catObj) {
     ctx.save();
-    ctx.translate(player.x + player.width / 2, player.y + player.height / 2);
+    ctx.translate(catObj.x + catObj.width / 2, catObj.y + catObj.height / 2);
 
-    if (player.direction === -1) ctx.scale(-1, 1);
+    if (catObj.direction === -1) ctx.scale(-1, 1);
 
     // Body
-    ctx.fillStyle = player.color;
+    ctx.fillStyle = catObj.color;
     ctx.beginPath();
-    ctx.arc(0, 0, player.width / 2, 0, Math.PI * 2);
+    ctx.arc(0, 0, catObj.width / 2, 0, Math.PI * 2);
     ctx.fill();
 
     // Ears
@@ -851,10 +906,15 @@
       for (var i = 0; i < dogs.length; i++) {
         drawDog(dogs[i]);
       }
+
+      // Bonus Cat
+      if (bonusCat && bonusCat.active) {
+        drawCat(bonusCat);
+      }
     }
 
     // Player
-    drawPlayer();
+    drawCat(player);
 
     // Floating texts
     for (var fi = floatingTexts.length - 1; fi >= 0; fi--) {

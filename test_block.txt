@@ -1,0 +1,5 @@
+  // Dog
+  var dogs = []; // Array of dog objects
+
+  // Current Active World Data
+  var currentWalls = [];
