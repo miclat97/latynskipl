@@ -4,7 +4,7 @@ import os
 
 def run():
     # Construct absolute path to the HTML file
-    file_path = os.path.abspath('cat-banana-game/index.html')
+    file_path = os.path.abspath('koci_bananiarz/index.html')
     url = f'file://{file_path}'
 
     with sync_playwright() as p:
